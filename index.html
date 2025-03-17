@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overland Packing Checklist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <h1 class="text-3xl font-bold text-center mb-2 text-primary">Overland Packing Checklist</h1>
+        <p class="text-center mb-4 text-gray-600 dark:text-gray-400">Track your packing progress and upload photos of your gear</p>
+        
+        <!-- Collaboration Controls -->
+        <div class="mb-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow border-2 border-primary">
+            <h2 class="text-xl font-semibold mb-4 flex items-center">
+                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                Share With Others
+            </h2>
+            
+            <div class="space-y-4">
+                <!-- Export List -->
+                <div>
+                    <p class="text-sm mb-2 font-bold">Step 1: Share your list with others</p>
+                    <button id="export-list-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-md transition-colors flex items-center justify-center text-lg">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M16 17l-4-4m0 0l-4 4m4-4v10"></path>
+                        </svg>
+                        GENERATE SHAREABLE CODE
+                    </button>
+                </div>
+                
+                <!-- Export Dialog -->
+                <div id="export-dialog" class="hidden p-4 bg-gray-100 dark:bg-gray-700 rounded-md border border-gray-300 dark:border-gray-600">
+                    <p class="font-medium text-sm mb-2">Share this code with others:</p>
+                    <textarea id="export-code" class="w-full p-2 text-xs font-mono h-24 bg-white dark:bg-gray-600 border rounded-md" readonly></textarea>
+                    <div class="flex justify-between mt-2">
+                        <button id="copy-export-btn" class="bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded-md text-sm">Copy to Clipboard</button>
+                        <button id="close-export-btn" class="bg-gray-600 hover:bg-gray-700 text-white py-1 px-3 rounded-md text-sm">Close</button>
+                    </div>
+                </div>
+                
+                <!-- Import List -->
+                <div>
+                    <p class="text-sm mb-2 font-bold">Step 2: Import a list from someone else</p>
+                    <button id="import-list-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md transition-colors flex items-center justify-center text-lg">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M16 7l-4-4m0 0l-4 4m4-4v10"></path>
+                        </svg>
+                        IMPORT SHARED LIST
+                    </button>
+                </div>
+                
+                <!-- Import Dialog -->
+                <div id="import-dialog" class="hidden p-4 bg-gray-100 dark:bg-gray-700 rounded-md border border-gray-300 dark:border-gray-600">
+                    <p class="font-medium text-sm mb-2">Paste the shared code:</p>
+                    <textarea id="import-code" class="w-full p-2 text-xs font-mono h-24 bg-white dark:bg-gray-600 border rounded-md" placeholder="Paste the shared code here..."></textarea>
+                    <div class="flex justify-between mt-2">
+                        <button id="do-import-btn" class="bg-primary hover:bg-primary/90 text-white py-1 px-3 rounded-md text-sm">Import List</button>
+                        <button id="close-import-btn" class="bg-gray-600 hover:bg-gray-700 text-white py-1 px-3 rounded-md text-sm">Cancel</button>
+                    </div>
+                    <p id="import-error" class="text-red-500 dark:text-red-400 text-xs mt-2 hidden">Invalid code. Please check and try again.</p>
+                </div>
+                
+                <div id="share-status" class="text-sm text-center hidden"></div>
+            </div>
+        </div>
+        
+        <div class="mb-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+            <h2 class="text-xl font-semibold mb-4">Add Custom Item</h2>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <input id="new-item-input" type="text" placeholder="Enter item name" 
+                       class="flex-grow p-2 border rounded-md text-base text-gray-900 dark:text-white bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-primary focus:border-primary">
+                <button id="add-item-btn" 
+                        class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded-md transition-colors">
+                    Add Item
+                </button>
+            </div>
+        </div>
+        
+        <div class="mb-8 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+            <h2 class="text-xl font-semibold mb-4">Share Checklist</h2>
+            <div class="flex flex-col sm:flex-row gap-2 mb-2">
+                <button id="copy-btn" class="flex-grow bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition-colors flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                    Copy to Clipboard
+                </button>
+                <button id="email-btn" class="flex-grow bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-colors flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    Share via Email
+                </button>
+            </div>
+            
+            <!-- Email Client Selection Modal -->
+            <div id="email-modal" class="hidden mt-3 p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                <p class="text-sm mb-2 font-medium">Select Email Client:</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button data-client="default" class="email-client-btn bg-white dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 py-2 px-3 rounded border border-gray-300 dark:border-gray-500 text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        Default Email
+                    </button>
+                    <button data-client="gmail" class="email-client-btn bg-white dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 py-2 px-3 rounded border border-gray-300 dark:border-gray-500 text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="#EA4335" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
+                        </svg>
+                        Gmail
+                    </button>
+                    <button data-client="outlook" class="email-client-btn bg-white dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 py-2 px-3 rounded border border-gray-300 dark:border-gray-500 text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="#0078D4" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24 7.387v10.478c0 .23-.24.42-.53.42h-8.137v-6.68h3.575v-1.675h-3.575v-1.26c0-.995.602-1.853 1.934-1.853h1.67v-1.488c-.287-.03-1.278-.1-2.434-.1-2.407 0-4.053 1.433-4.053 4.064v1.637h-2.724v1.675h2.724v6.68H.53c-.29 0-.53-.19-.53-.42V7.387c0-.23.24-.42.53-.42h22.94c.29 0 .53.19.53.42z"/>
+                        </svg>
+                        Outlook
+                    </button>
+                    <button data-client="yahoo" class="email-client-btn bg-white dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 py-2 px-3 rounded border border-gray-300 dark:border-gray-500 text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="#6001D2" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.131 21c3.09 0 7.874-1.472 7.874-5.023 0-1.592-1.101-2.422-2.339-2.422-3.09 0-1.945 4.431-5.525 4.431-1.736 0-2.672-1.104-2.672-2.483 0-3.065 3.09-5.023 7.496-5.023-.904.491-1.938 1.472-1.938 2.847 0 1.227.679 1.963 1.87 1.963 2.339 0 1.452-3.65 5.112-3.65 1.32 0 2.203.798 2.203 2.052 0 3.252-4.636 4.308-8.138 4.308-4.7 0-9.147-2.422-9.147-6.975 0-4.308 4.258-7.559 9.712-7.559 5.317 0 9.91 2.97 9.91 7.252 0 4.124-4.433 7.62-9.577 7.62-2.48 0-4.766-.98-6.228-2.545.97 1.043 2.339 1.778 3.984 2.177.846.184.904.245.904 1.104v.616L7.605 21h5.526z"/>
+                        </svg>
+                        Yahoo
+                    </button>
+                </div>
+                <button id="close-email-modal" class="mt-2 w-full text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">Cancel</button>
+            </div>
+
+            <div id="copy-status" class="text-center mt-2 text-green-600 dark:text-green-400 hidden">
+                Checklist copied to clipboard!
+            </div>
+        </div>
+        
+        <div class="sticky top-0 z-10 bg-gray-50 dark:bg-gray-900 py-2 mb-2">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold">Your Packing List</h2>
+                <div class="flex space-x-2">
+                    <button id="expand-all-btn" class="text-primary hover:text-primary/80 text-sm font-medium">Expand All</button>
+                    <button id="collapse-all-btn" class="text-primary hover:text-primary/80 text-sm font-medium">Collapse All</button>
+                </div>
+            </div>
+            <div class="mt-2 grid grid-cols-3 gap-2 text-sm">
+                <div class="bg-green-100 dark:bg-green-900 px-2 py-1 rounded">
+                    <span id="packed-count">0</span> Packed
+                </div>
+                <div class="bg-blue-100 dark:bg-blue-900 px-2 py-1 rounded">
+                    <span id="have-count">0</span> Have
+                </div>
+                <div class="bg-red-100 dark:bg-red-900 px-2 py-1 rounded">
+                    <span id="need-count">0</span> Need
+                </div>
+            </div>
+        </div>
+        
+        <div id="categories-container" class="space-y-6">
+            <!-- Categories and items will be added here dynamically -->
+        </div>
+    </div>
+
+    <script>
+        // Check for dark mode preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+        
+        // Main app logic
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
+            const newItemInput = document.getElementById('new-item-input');
+            const addItemBtn = document.getElementById('add-item-btn');
+            const categoriesContainer = document.getElementById('categories-container');
+            const expandAllBtn = document.getElementById('expand-all-btn');
+            const collapseAllBtn = document.getElementById('collapse-all-btn');
+            const packedCountEl = document.getElementById('packed-count');
+            const haveCountEl = document.getElementById('have-count');
+            const needCountEl = document.getElementById('need-count');
+            
+            // Sharing elements
+            const exportListBtn = document.getElementById('export-list-btn');
+            const exportDialog = document.getElementById('export-dialog');
+            const exportCode = document.getElementById('export-code');
+            const copyExportBtn = document.getElementById('copy-export-btn');
+            const closeExportBtn = document.getElementById('close-export-btn');
+            const importListBtn = document.getElementById('import-list-btn');
+            const importDialog = document.getElementById('import-dialog');
+            const importCode = document.getElementById('import-code');
+            const doImportBtn = document.getElementById('do-import-btn');
+            const closeImportBtn = document.getElementById('close-import-btn');
+            const importError = document.getElementById('import-error');
+            const shareStatus = document.getElementById('share-status');
+            
+            // Initial items data with categories
+            let items = [
+                // Clothing Category
+                {
+                    name: 'Navy Overland T-Shirt',
+                    quantity: '1',
+                    description: 'We will send every student an Overland T-shirt prior to the trip. Please wear this T-shirt to trip start.',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Synthetic T-Shirt',
+                    quantity: '4',
+                    description: 'Please consider cultural sensitivity; you will be expected to have your shoulders covered.',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Synthetic Long-Sleeve T-shirt',
+                    quantity: '1',
+                    description: '',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Synthetic Shorts',
+                    quantity: '2',
+                    description: '',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Synthetic Hiking Pants',
+                    quantity: '2',
+                    description: 'Lightweight and quick dry material. Non-cotton warmup style pants are acceptable.',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Fleece Pants',
+                    quantity: '1',
+                    description: 'Please do not bring cotton sweatpants (they are heavy and bulky and will not keep you warm if wet).',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Synthetic Long Underwear Top and Bottom',
+                    quantity: '2',
+                    description: '',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Underwear',
+                    quantity: '7',
+                    description: '',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Athletic Socks',
+                    quantity: '2',
+                    description: '',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Wool and/or Synthetic Socks',
+                    quantity: '3',
+                    description: '',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Neck Gaiter or Buff',
+                    quantity: '1',
+                    description: '',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Gloves or Mittens',
+                    quantity: '2',
+                    description: 'One pair of insulated, warm and waterproof gloves or mittens, and one pair of liner gloves for cool nights around camp.',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Winter Hat',
+                    quantity: '1',
+                    description: '',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Hat with Visor',
+                    quantity: '1',
+                    description: '',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Bandana',
+                    quantity: 'optional',
+                    description: '',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Pajamas',
+                    quantity: 'optional',
+                    description: 'Students sometimes prefer to sleep in shorts and a T-shirt instead of pajamas.',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                
+                // Outer Layers Category
+                {
+                    name: 'Fleece Jacket or Pullover',
+                    quantity: '1',
+                    description: '',
+                    category: 'Outer Layers',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Midweight Synthetic or Down Jacket',
+                    quantity: '1',
+                    description: '',
+                    category: 'Outer Layers',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Raincoat',
+                    quantity: '1',
+                    description: 'Waterproof material (e.g., Gore-Tex, or similar) is required. Your jacket should be large enough to allow layers underneath. Ponchos are not acceptable.',
+                    category: 'Outer Layers',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Waterproof Rain Pants',
+                    quantity: '1',
+                    description: '',
+                    category: 'Outer Layers',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                
+                // General Gear Category
+                {
+                    name: 'Sleeping Bag',
+                    quantity: '1',
+                    description: 'A lightweight, compact sleeping bag rated to 40 degrees Fahrenheit or less. We recommend either synthetic or treated down material. Your sleeping bag should compress into a stuff sack no larger than 20" in length.',
+                    category: 'General Gear',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Sleeping Pad',
+                    quantity: '1',
+                    description: '¾-length or full-length closed cell foam (thin and firm) or lightweight, backpacking style inflatable pad.',
+                    category: 'General Gear',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Bowl, Mug and Utensils',
+                    quantity: '1 set',
+                    description: '6" to 8" plastic dish or bowl with top, insulated plastic mug, spoon, fork, and knife. These don\'t need to be special camping utensils (a Tupperware dish and regular utensils are fine).',
+                    category: 'General Gear',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Headlamp',
+                    quantity: '1',
+                    description: 'Please bring an extra battery/batteries.',
+                    category: 'General Gear',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Water Bottle',
+                    quantity: '1',
+                    description: 'One 1-liter bottle. A Camelbak or similar water carrier is acceptable.',
+                    category: 'General Gear',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Hydration System',
+                    quantity: '1',
+                    description: 'One 2-liter hydration bladder (e.g., CamelBak or Platypus) is required.',
+                    category: 'General Gear',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Gaiters',
+                    quantity: '1 pair',
+                    description: 'Calf-height, waterproof gaiters to protect your legs and feet when hiking through brush, or crossing snow fields or streams.',
+                    category: 'General Gear',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Adjustable Hiking Poles',
+                    quantity: 'Optional',
+                    description: 'Overland will provide students adjustable hiking poles to use during the Kilimanjaro climb. However, if students prefer to bring their own pair of poles to use for the duration of the trip, they certainly can.',
+                    category: 'General Gear',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                
+                // Footwear Category
+                {
+                    name: 'Waterproof Hiking Boots',
+                    quantity: '1 pair',
+                    description: 'Choose comfortable boots designed for hiking with a pack (i.e., mid to high cut for ankle support). Boots should be waterproof. Break them in before the start of your trip.',
+                    category: 'Footwear',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Sneakers',
+                    quantity: '1 pair',
+                    description: 'Comfortable shoes with good traction and stability, suitable for walking on varied and rocky terrain.',
+                    category: 'Footwear',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Sandals',
+                    quantity: '1 pair',
+                    description: 'Flip flops or Crocs work well.',
+                    category: 'Footwear',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                
+                // Miscellaneous Category
+                {
+                    name: 'Synthetic Camping Towel',
+                    quantity: '1',
+                    description: 'A medium-size synthetic camping towel (synthetic camping towels dry much faster than regular towels).',
+                    category: 'Miscellaneous',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Travel Size Toiletries',
+                    quantity: '1 set',
+                    description: '',
+                    category: 'Miscellaneous',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Sunglasses',
+                    quantity: '1',
+                    description: '',
+                    category: 'Miscellaneous',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Sunscreen and Chapstick',
+                    quantity: '1 each',
+                    description: 'SPF 15+ and Chapstick with SPF protection',
+                    category: 'Miscellaneous',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Gallon Sized Ziploc Bags',
+                    quantity: '5',
+                    description: 'To organize and waterproof your gear and small items.',
+                    category: 'Miscellaneous',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Community Donation Items',
+                    quantity: 'Optional',
+                    description: 'Reading and reference books, arts and crafts/school materials (markers, paint brushes, pens, and pencils), secondhand clothing items (including t-shirts, boxes/underwear, warmer layers, and jeans), and recreation items (soccer and basketballs, other soccer equipment and apparel, etc.). Please reach out if you have additional questions about donating items.',
+                    category: 'Miscellaneous',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Notebook and Pen',
+                    quantity: '1 each',
+                    description: '',
+                    category: 'Miscellaneous',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Camera, Charger and Extra Batteries',
+                    quantity: 'Optional',
+                    description: 'A digital or disposable camera.',
+                    category: 'Miscellaneous',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Personal Journal or Book',
+                    quantity: 'Optional',
+                    description: '',
+                    category: 'Miscellaneous',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                
+                // Documents and Extra Funds Category
+                {
+                    name: 'Passport',
+                    quantity: '1',
+                    description: 'Please bring a passport that is valid until at least six months after your trip end date.',
+                    category: 'Documents and Extra Funds',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Single Entry Visa for Tanzania',
+                    quantity: '1',
+                    description: 'More information on how to obtain a single entry visa is provided to enrolled students.',
+                    category: 'Documents and Extra Funds',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Permission to Travel to and From Tanzania',
+                    quantity: '1',
+                    description: 'Students under 18 should bring the original, signed copy of their Permission to Travel to and from Tanzania form, and should store it together with their passport.',
+                    category: 'Documents and Extra Funds',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Passport Photocopies',
+                    quantity: '4+',
+                    description: 'Make at least four photocopies of your passport and visa (if applicable). Leave one copy with your family and put photocopies in both your checked luggage and carry-on luggage for the flight, separate from your original documents.',
+                    category: 'Documents and Extra Funds',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Health Insurance Card',
+                    quantity: '1',
+                    description: 'Please bring an original or copy of your health insurance card.',
+                    category: 'Documents and Extra Funds',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Spending Money',
+                    quantity: '$25/week',
+                    description: 'Each student should bring cash or a debit card to cover spending money and miscellaneous expenses. Debit cards provide a good exchange rate. Leaders can also help students convert cash to local currency at the airport at the start of the trip. While all meals and activities are included in the trip fee, we recommend $25/week for spending money (for example: for souvenirs or an occasional drink or snack beyond what is provided to the group as a whole). Excess spending money is not necessary for a wonderful Overland experience. Please note: We have found that prepaid Visa cards and AMEX cards do not work internationally.',
+                    category: 'Documents and Extra Funds',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Miscellaneous Funds',
+                    quantity: '$100',
+                    description: 'Most Overland students will incur some expenses while traveling (for example: an equipment repair or baggage fees at trip end). Please provide your child with $100 (in addition to spending money), to cover these expenses.',
+                    category: 'Documents and Extra Funds',
+                    status: 'Need It',
+                    photoURL: null
+                }
+            ];
+            
+            let expandedCategories = new Set();
+            
+            // Try to load saved items from localStorage
+            try {
+                const savedItems = localStorage.getItem('packingItems');
+                if (savedItems) {
+                    items = JSON.parse(savedItems);
+                }
+            } catch (e) {
+                console.error('Error loading saved items:', e);
+            }
+            
+            // Function to update the UI based on items array
+            function updateUI() {
+                categoriesContainer.innerHTML = '';
+                
+                // Save to localStorage
+                try {
+                    localStorage.setItem('packingItems', JSON.stringify(items));
+                } catch (e) {
+                    console.error('Error saving items:', e);
+                }
+                
+                // Group items by category
+                const categories = {};
+                items.forEach(item => {
+                    if (!categories[item.category]) {
+                        categories[item.category] = [];
+                    }
+                    categories[item.category].push(item);
+                });
+                
+                // Update counts
+                const packedCount = items.filter(item => item.status === 'Packed It').length;
+                const haveCount = items.filter(item => item.status === 'Have It').length;
+                const needCount = items.filter(item => item.status === 'Need It').length;
+                
+                packedCountEl.textContent = packedCount;
+                haveCountEl.textContent = haveCount;
+                needCountEl.textContent = needCount;
+                
+                // Create category sections
+                Object.entries(categories).forEach(([category, categoryItems]) => {
+                    const categoryElement = document.createElement('div');
+                    categoryElement.className = 'bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden';
+                    
+                    // Category header
+                    const categoryHeader = document.createElement('div');
+                    categoryHeader.className = 'bg-gray-100 dark:bg-gray-700 px-4 py-3 flex justify-between items-center cursor-pointer';
+                    categoryHeader.addEventListener('click', () => {
+                        const contentDiv = categoryElement.querySelector('.category-content');
+                        if (contentDiv.style.display === 'none') {
+                            contentDiv.style.display = 'block';
+                            expandedCategories.add(category);
+                            const icon = categoryHeader.querySelector('svg');
+                            icon.style.transform = 'rotate(180deg)';
+                        } else {
+                            contentDiv.style.display = 'none';
+                            expandedCategories.delete(category);
+                            const icon = categoryHeader.querySelector('svg');
+                            icon.style.transform = 'rotate(0deg)';
+                        }
+                    });
+                    
+                    const categoryTitle = document.createElement('h3');
+                    categoryTitle.className = 'font-medium text-lg';
+                    categoryTitle.textContent = category;
+                    
+                    const categoryCounter = document.createElement('div');
+                    categoryCounter.className = 'flex items-center';
+                    
+                    const categoryCount = document.createElement('span');
+                    categoryCount.className = 'text-sm mr-2';
+                    categoryCount.textContent = `${categoryItems.length} items`;
+                    
+                    const chevronIcon = document.createElement('div');
+                    chevronIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>';
+                    
+                    categoryCounter.appendChild(categoryCount);
+                    categoryCounter.appendChild(chevronIcon);
+                    
+                    categoryHeader.appendChild(categoryTitle);
+                    categoryHeader.appendChild(categoryCounter);
+                    
+                    // Category content
+                    const categoryContent = document.createElement('div');
+                    categoryContent.className = 'category-content divide-y divide-gray-200 dark:divide-gray-700';
+                    if (!expandedCategories.has(category)) {
+                        categoryContent.style.display = 'none';
+                    } else {
+                        const icon = chevronIcon.querySelector('svg');
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                    
+                    // Add items to category
+                    categoryItems.forEach((item, index) => {
+                        const itemElement = document.createElement('div');
+                        itemElement.className = 'p-4';
+                        
+                        // Create header with item name and delete button
+                        const headerDiv = document.createElement('div');
+                        headerDiv.className = 'flex justify-between items-start mb-2';
+                        
+                        const itemNameDiv = document.createElement('div');
+                        itemNameDiv.className = 'flex-grow';
+                        
+                        const itemName = document.createElement('h4');
+                        itemName.className = 'text-lg font-medium';
+                        itemName.textContent = `${item.name} (${item.quantity})`;
+                        
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'text-red-500 hover:text-red-700 transition-colors ml-2 flex-shrink-0';
+                        deleteBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>';
+                        deleteBtn.addEventListener('click', () => {
+                            items = items.filter((_, i) => !(item.category === category && i === index));
+                            updateUI();
+                        });
+                        
+                        itemNameDiv.appendChild(itemName);
+                        
+                        headerDiv.appendChild(itemNameDiv);
+                        headerDiv.appendChild(deleteBtn);
+                        
+                        // Description
+                        const description = document.createElement('p');
+                        description.className = 'text-sm text-gray-600 dark:text-gray-400 mb-3';
+                        description.textContent = item.description || 'No description provided';
+                        
+                        // Create status buttons
+                        const statusDiv = document.createElement('div');
+                        statusDiv.className = 'flex flex-wrap gap-2 mb-4';
+                        
+                        const statuses = ['Need It', 'Have It', 'Packed It'];
+                        statuses.forEach(status => {
+                            const statusBtn = document.createElement('button');
+                            
+                            if (item.status === status) {
+                                statusBtn.className = 'px-3 py-1 rounded-full text-white';
+                                if (status === 'Need It') {
+                                    statusBtn.classList.add('bg-red-500');
+                                } else if (status === 'Have It') {
+                                    statusBtn.classList.add('bg-blue-500');
+                                } else if (status === 'Packed It') {
+                                    statusBtn.classList.add('bg-green-500');
+                                }
+                            } else {
+                                statusBtn.className = 'px-3 py-1 rounded-full text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors';
+                            }
+                            
+                            statusBtn.textContent = status;
+                            statusBtn.addEventListener('click', () => {
+                                // If changing from a status that required a photo to "Need It", remove the photo
+                                if (status === 'Need It' && (item.status === 'Have It' || item.status === 'Packed It')) {
+                                    item.photoURL = null;
+                                }
+                                
+                                item.status = status;
+                                updateUI();
+                            });
+                            
+                            statusDiv.appendChild(statusBtn);
+                        });
+                        
+                        // Create photo upload section if "Have It" or "Packed It" is selected
+                        let photoDiv = document.createElement('div');
+                        
+                        if (item.status === 'Have It' || item.status === 'Packed It') {
+                            photoDiv.className = 'mt-4';
+                            
+                            if (item.photoURL) {
+                                // Display the photo if it exists
+                                const photoContainer = document.createElement('div');
+                                photoContainer.className = 'mb-2';
+                                
+                                const photo = document.createElement('img');
+                                photo.src = item.photoURL;
+                                photo.className = 'w-full max-h-48 object-contain rounded-md';
+                                photo.alt = item.name;
+                                
+                                photoContainer.appendChild(photo);
+                                photoDiv.appendChild(photoContainer);
+                                
+                                // Add button to change photo
+                                const changePhotoBtn = document.createElement('button');
+                                changePhotoBtn.className = 'text-primary text-sm underline mb-2 block';
+                                changePhotoBtn.textContent = 'Change Photo';
+                                changePhotoBtn.addEventListener('click', () => {
+                                    item.photoURL = null;
+                                    updateUI();
+                                });
+                                
+                                photoDiv.appendChild(changePhotoBtn);
+                            } else {
+                                // Show photo upload input
+                                const uploadLabel = document.createElement('p');
+                                uploadLabel.className = 'mb-2 font-medium';
+                                uploadLabel.textContent = `Please upload a photo of your ${item.name}:`;
+                                
+                                const fileInput = document.createElement('input');
+                                fileInput.type = 'file';
+                                fileInput.accept = 'image/*';
+                                fileInput.className = 'block w-full text-sm text-gray-900 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90';
+                                
+                                fileInput.addEventListener('change', (event) => {
+                                    const file = event.target.files[0];
+                                    if (file) {
+                                        const reader = new FileReader();
+                                        reader.onload = (e) => {
+                                            item.photoURL = e.target.result;
+                                            updateUI();
+                                        };
+                                        reader.readAsDataURL(file);
+                                    }
+                                });
+                                
+                                photoDiv.appendChild(uploadLabel);
+                                photoDiv.appendChild(fileInput);
+                            }
+                        }
+                        
+                        // Append all elements to the item container
+                        itemElement.appendChild(headerDiv);
+                        itemElement.appendChild(description);
+                        itemElement.appendChild(statusDiv);
+                        itemElement.appendChild(photoDiv);
+                        
+                        categoryContent.appendChild(itemElement);
+                    });
+                    
+                    categoryElement.appendChild(categoryHeader);
+                    categoryElement.appendChild(categoryContent);
+                    categoriesContainer.appendChild(categoryElement);
+                });
+            }
+            
+            // Add a new item
+            function addNewItem() {
+                const itemName = newItemInput.value.trim();
+                
+                if (itemName !== '') {
+                    items.push({
+                        name: itemName,
+                        quantity: '1',
+                        description: '',
+                        category: 'Custom Items',
+                        status: 'Need It',
+                        photoURL: null
+                    });
+                    
+                    // Expand the Custom Items category
+                    expandedCategories.add('Custom Items');
+                    
+                    newItemInput.value = '';
+                    updateUI();
+                }
+            }
+            
+            // Export list (generate shareable code)
+            exportListBtn.addEventListener('click', () => {
+                // Generate a simplified version of the list without photos
+                const exportItems = items.map(item => {
+                    // Create a simplified item without photoURL data
+                    return {
+                        name: item.name,
+                        quantity: item.quantity,
+                        description: item.description,
+                        category: item.category,
+                        status: item.status
+                    };
+                });
+                
+                // Create the export object
+                const exportData = {
+                    version: 1,
+                    timestamp: new Date().toISOString(),
+                    items: exportItems
+                };
+                
+                // Convert to JSON and then to Base64
+                const jsonStr = JSON.stringify(exportData);
+                const base64Str = btoa(jsonStr);
+                
+                // Display the export code
+                exportCode.value = base64Str;
+                exportDialog.classList.remove('hidden');
+            });
+            
+            // Copy export code to clipboard
+            copyExportBtn.addEventListener('click', () => {
+                exportCode.select();
+                document.execCommand('copy');
+                
+                // Show success message
+                shareStatus.textContent = "Shareable code copied to clipboard!";
+                shareStatus.className = "text-sm text-center text-green-600 dark:text-green-400";
+                shareStatus.classList.remove('hidden');
+                
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    shareStatus.classList.add('hidden');
+                }, 3000);
+            });
+            
+            // Close export dialog
+            closeExportBtn.addEventListener('click', () => {
+                exportDialog.classList.add('hidden');
+            });
+            
+            // Import list
+            importListBtn.addEventListener('click', () => {
+                importDialog.classList.remove('hidden');
+                importError.classList.add('hidden');
+                importCode.value = '';
+            });
+            
+            // Process import
+            doImportBtn.addEventListener('click', () => {
+                const code = importCode.value.trim();
+                
+                if (!code) {
+                    importError.textContent = "Please enter a code.";
+                    importError.classList.remove('hidden');
+                    return;
+                }
+                
+                try {
+                    // Decode from Base64 to JSON
+                    const jsonStr = atob(code);
+                    const importData = JSON.parse(jsonStr);
+                    
+                    // Validate the import data
+                    if (!importData.version || !importData.items || !Array.isArray(importData.items)) {
+                        throw new Error("Invalid import data format");
+                    }
+                    
+                    // Import the items
+                    const importedItems = importData.items.map(item => {
+                        return {
+                            name: item.name || "Unknown item",
+                            quantity: item.quantity || "1",
+                            description: item.description || "",
+                            category: item.category || "Custom Items",
+                            status: item.status || "Need It",
+                            photoURL: null // Reset photos for imported items
+                        };
+                    });
+                    
+                    // Replace current items with imported ones
+                    items = importedItems;
+                    updateUI();
+                    
+                    // Close dialog and show success message
+                    importDialog.classList.add('hidden');
+                    shareStatus.textContent = "List imported successfully!";
+                    shareStatus.className = "text-sm text-center text-green-600 dark:text-green-400";
+                    shareStatus.classList.remove('hidden');
+                    
+                    // Hide message after 3 seconds
+                    setTimeout(() => {
+                        shareStatus.classList.add('hidden');
+                    }, 3000);
+                    
+                } catch (e) {
+                    console.error('Error importing list:', e);
+                    importError.textContent = "Invalid code. Please check and try again.";
+                    importError.classList.remove('hidden');
+                }
+            });
+            
+            // Close import dialog
+            closeImportBtn.addEventListener('click', () => {
+                importDialog.classList.add('hidden');
+            });
+            
+            // Generate formatted text for sharing
+            function generateFormattedList() {
+                // Group items by category
+                const categories = {};
+                items.forEach(item => {
+                    if (!categories[item.category]) {
+                        categories[item.category] = [];
+                    }
+                    categories[item.category].push(item);
+                });
+                
+                let formattedText = "OVERLAND PACKING CHECKLIST\n\n";
+                
+                // Add summary
+                const packedCount = items.filter(item => item.status === 'Packed It').length;
+                const haveCount = items.filter(item => item.status === 'Have It').length;
+                const needCount = items.filter(item => item.status === 'Need It').length;
+                formattedText += `Summary: ${packedCount} Packed | ${haveCount} Have | ${needCount} Need\n\n`;
+                
+                // Add items by category
+                Object.entries(categories).forEach(([category, categoryItems]) => {
+                    formattedText += `${category.toUpperCase()}\n${'-'.repeat(category.length)}\n`;
+                    
+                    categoryItems.forEach(item => {
+                        // Add status indicator
+                        let statusSymbol = '[ ] '; // Need It
+                        if (item.status === 'Have It') statusSymbol = '[✓] ';
+                        if (item.status === 'Packed It') statusSymbol = '[✓✓] ';
+                        
+                        // Add item details
+                        formattedText += `${statusSymbol}${item.name} (${item.quantity})`;
+                        if (item.description && item.description.trim() !== '') {
+                            formattedText += `\n    ${item.description}`;
+                        }
+                        formattedText += '\n';
+                    });
+                    formattedText += '\n';
+                });
+                
+                // Add legend
+                formattedText += "Status Legend:\n";
+                formattedText += "[ ] = Need It | [✓] = Have It | [✓✓] = Packed It\n\n";
+                formattedText += "Created with Overland Packing Checklist";
+                
+                return formattedText;
+            }
+            
+            // Share via clipboard
+            const copyBtn = document.getElementById('copy-btn');
+            const copyStatus = document.getElementById('copy-status');
+            
+            copyBtn.addEventListener('click', () => {
+                const formattedList = generateFormattedList();
+                
+                // Use the Clipboard API to copy the text
+                navigator.clipboard.writeText(formattedList)
+                    .then(() => {
+                        // Show success message
+                        copyStatus.textContent = "Checklist copied to clipboard!";
+                        copyStatus.classList.remove('hidden');
+                        
+                        // Hide message after 3 seconds
+                        setTimeout(() => {
+                            copyStatus.classList.add('hidden');
+                        }, 3000);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy: ', err);
+                        copyStatus.textContent = "Failed to copy. Try again.";
+                        copyStatus.classList.remove('hidden');
+                        setTimeout(() => {
+                            copyStatus.classList.add('hidden');
+                        }, 3000);
+                    });
+            });
+            
+            // Email modal functionality
+            const emailBtn = document.getElementById('email-btn');
+            const emailModal = document.getElementById('email-modal');
+            const closeEmailModalBtn = document.getElementById('close-email-modal');
+            const emailClientBtns = document.querySelectorAll('.email-client-btn');
+            
+            // Show email modal when clicking share via email
+            emailBtn.addEventListener('click', () => {
+                emailModal.classList.remove('hidden');
+            });
+            
+            // Close email modal
+            closeEmailModalBtn.addEventListener('click', () => {
+                emailModal.classList.add('hidden');
+            });
+            
+            // Handle email client selection
+            emailClientBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const client = btn.getAttribute('data-client');
+                    const formattedList = generateFormattedList();
+                    const subject = encodeURIComponent("Overland Packing Checklist");
+                    const body = encodeURIComponent(formattedList);
+                    
+                    let emailUrl = '';
+                    
+                    switch(client) {
+                        case 'gmail':
+                            emailUrl = `https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&su=${subject}&body=${body}`;
+                            break;
+                        case 'outlook':
+                            emailUrl = `https://outlook.live.com/mail/0/deeplink/compose?subject=${subject}&body=${body}`;
+                            break;
+                        case 'yahoo':
+                            emailUrl = `https://compose.mail.yahoo.com/?subject=${subject}&body=${body}`;
+                            break;
+                        default:
+                            // Default email client
+                            emailUrl = `mailto:?subject=${subject}&body=${body}`;
+                    }
+                    
+                    // Open the email client
+                    window.open(emailUrl, '_blank');
+                    
+                    // Hide the modal after selection
+                    emailModal.classList.add('hidden');
+                });
+            });
+            
+            // Event listeners
+            addItemBtn.addEventListener('click', addNewItem);
+            
+            newItemInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    addNewItem();
+                }
+            });
+            
+            expandAllBtn.addEventListener('click', () => {
+                items.forEach(item => {
+                    expandedCategories.add(item.category);
+                });
+                updateUI();
+            });
+            
+            collapseAllBtn.addEventListener('click', () => {
+                expandedCategories.clear();
+                updateUI();
+            });
+            
+            // Initialize the UI
+            updateUI();
+        });
+    </script>
+</body>
+</html>
