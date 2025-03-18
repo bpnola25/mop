@@ -23,63 +23,72 @@
         <h1 class="text-3xl font-bold text-center mb-2 text-primary">Overland Packing Checklist</h1>
         <p class="text-center mb-4 text-gray-600 dark:text-gray-400">Track your packing progress and upload photos of your gear</p>
         
-        <!-- Collaboration Controls -->
-        <div class="mb-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow border-2 border-primary">
-            <h2 class="text-xl font-semibold mb-4 flex items-center">
-                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        <!-- Authentication UI -->
+        <div id="auth-container" class="mb-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+          <div id="login-form">
+            <h2 class="text-xl font-semibold mb-4">Login or Sign Up</h2>
+            <div class="flex flex-col space-y-3">
+              <input id="email-input" type="email" placeholder="Email" class="p-2 border rounded-md text-base text-gray-900 dark:text-white bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+              <input id="password-input" type="password" placeholder="Password" class="p-2 border rounded-md text-base text-gray-900 dark:text-white bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+              <div class="flex space-x-3">
+                <button id="login-btn" class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded-md">Login</button>
+                <button id="signup-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Sign Up</button>
+              </div>
+              <button id="google-signin-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
+                  <path fill="#ffffff" d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
                 </svg>
-                Share With Others
-            </h2>
-            
-            <div class="space-y-4">
-                <!-- Export List -->
-                <div>
-                    <p class="text-sm mb-2 font-bold">Step 1: Share your list with others</p>
-                    <button id="export-list-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-md transition-colors flex items-center justify-center text-lg">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M16 17l-4-4m0 0l-4 4m4-4v10"></path>
-                        </svg>
-                        GENERATE SHAREABLE CODE
-                    </button>
-                </div>
-                
-                <!-- Export Dialog -->
-                <div id="export-dialog" class="hidden p-4 bg-gray-100 dark:bg-gray-700 rounded-md border border-gray-300 dark:border-gray-600">
-                    <p class="font-medium text-sm mb-2">Share this code with others:</p>
-                    <textarea id="export-code" class="w-full p-2 text-xs font-mono h-24 bg-white dark:bg-gray-600 border rounded-md" readonly></textarea>
-                    <div class="flex justify-between mt-2">
-                        <button id="copy-export-btn" class="bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded-md text-sm">Copy to Clipboard</button>
-                        <button id="close-export-btn" class="bg-gray-600 hover:bg-gray-700 text-white py-1 px-3 rounded-md text-sm">Close</button>
-                    </div>
-                </div>
-                
-                <!-- Import List -->
-                <div>
-                    <p class="text-sm mb-2 font-bold">Step 2: Import a list from someone else</p>
-                    <button id="import-list-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md transition-colors flex items-center justify-center text-lg">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M16 7l-4-4m0 0l-4 4m4-4v10"></path>
-                        </svg>
-                        IMPORT SHARED LIST
-                    </button>
-                </div>
-                
-                <!-- Import Dialog -->
-                <div id="import-dialog" class="hidden p-4 bg-gray-100 dark:bg-gray-700 rounded-md border border-gray-300 dark:border-gray-600">
-                    <p class="font-medium text-sm mb-2">Paste the shared code:</p>
-                    <textarea id="import-code" class="w-full p-2 text-xs font-mono h-24 bg-white dark:bg-gray-600 border rounded-md" placeholder="Paste the shared code here..."></textarea>
-                    <div class="flex justify-between mt-2">
-                        <button id="do-import-btn" class="bg-primary hover:bg-primary/90 text-white py-1 px-3 rounded-md text-sm">Import List</button>
-                        <button id="close-import-btn" class="bg-gray-600 hover:bg-gray-700 text-white py-1 px-3 rounded-md text-sm">Cancel</button>
-                    </div>
-                    <p id="import-error" class="text-red-500 dark:text-red-400 text-xs mt-2 hidden">Invalid code. Please check and try again.</p>
-                </div>
-                
-                <div id="share-status" class="text-sm text-center hidden"></div>
+                Sign in with Google
+              </button>
             </div>
+            <p id="auth-error" class="text-red-500 mt-2 text-sm hidden"></p>
+          </div>
+          
+          <div id="user-info" class="hidden">
+            <div class="flex justify-between items-center">
+              <div>
+                <h2 class="text-xl font-semibold">Welcome! <span id="user-email"></span></h2>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Your lists are automatically synced</p>
+              </div>
+              <button id="logout-btn" class="text-red-600 hover:text-red-800">Logout</button>
+            </div>
+          </div>
         </div>
         
+        <!-- List Controls -->
+        <div id="list-controls" class="mb-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow hidden">
+          <div class="flex items-center justify-between">
+            <h3 class="font-medium">Current List: <span id="current-list-name">My Packing List</span></h3>
+            <div>
+              <button id="new-list-btn" class="text-primary text-sm">+ New List</button>
+            </div>
+          </div>
+          
+          <div class="mt-3">
+            <button id="share-list-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded-md transition-colors flex items-center justify-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+              </svg>
+              Share This List
+            </button>
+          </div>
+          
+          <div id="share-options" class="mt-4 bg-gray-100 dark:bg-gray-700 p-3 rounded-md hidden">
+            <p class="text-sm font-medium mb-2">Share Options</p>
+            <div class="flex gap-2 mb-3">
+              <input id="share-link-input" type="text" readonly class="flex-grow p-2 text-sm bg-white dark:bg-gray-600 border rounded-md text-gray-900 dark:text-white">
+              <button id="copy-link-btn" class="bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded-md text-sm">Copy</button>
+            </div>
+            <div class="flex justify-between">
+              <div class="flex items-center">
+                <input id="edit-permission" type="checkbox" class="mr-2">
+                <label for="edit-permission" class="text-sm">Allow editing</label>
+              </div>
+              <button id="close-share-btn" class="text-sm text-gray-600 dark:text-gray-400">Close</button>
+            </div>
+          </div>
+        </div>
+
         <div class="mb-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
             <h2 class="text-xl font-semibold mb-4">Add Custom Item</h2>
             <div class="flex flex-col sm:flex-row gap-2">
@@ -172,7 +181,29 @@
         </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
     <script>
+        // Firebase Configuration - REPLACE WITH YOUR OWN CONFIG
+        const firebaseConfig = {
+          apiKey: "AIzaSyCXjWGoFGBcChocW8uvb22N-Br4XBkAHdk",
+          authDomain: "kilimanjaro-overland.firebaseapp.com",
+          projectId: "kilimanjaro-overland",
+          storageBucket: "kilimanjaro-overland.firebasestorage.app",
+          messagingSenderId: "668975772707",
+          appId: "1:668975772707:web:9c74ec7533c9552fefad96"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        
         // Check for dark mode preference
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
@@ -198,22 +229,252 @@
             const haveCountEl = document.getElementById('have-count');
             const needCountEl = document.getElementById('need-count');
             
-            // Sharing elements
-            const exportListBtn = document.getElementById('export-list-btn');
-            const exportDialog = document.getElementById('export-dialog');
-            const exportCode = document.getElementById('export-code');
-            const copyExportBtn = document.getElementById('copy-export-btn');
-            const closeExportBtn = document.getElementById('close-export-btn');
-            const importListBtn = document.getElementById('import-list-btn');
-            const importDialog = document.getElementById('import-dialog');
-            const importCode = document.getElementById('import-code');
-            const doImportBtn = document.getElementById('do-import-btn');
-            const closeImportBtn = document.getElementById('close-import-btn');
-            const importError = document.getElementById('import-error');
-            const shareStatus = document.getElementById('share-status');
+            // Auth elements
+            const loginForm = document.getElementById('login-form');
+            const userInfo = document.getElementById('user-info');
+            const emailInput = document.getElementById('email-input');
+            const passwordInput = document.getElementById('password-input');
+            const loginBtn = document.getElementById('login-btn');
+            const signupBtn = document.getElementById('signup-btn');
+            const googleSigninBtn = document.getElementById('google-signin-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            const authError = document.getElementById('auth-error');
+            const userEmail = document.getElementById('user-email');
             
-            // Initial items data with categories
+            // List management elements
+            const listControls = document.getElementById('list-controls');
+            const currentListName = document.getElementById('current-list-name');
+            const newListBtn = document.getElementById('new-list-btn');
+            const shareListBtn = document.getElementById('share-list-btn');
+            const shareOptions = document.getElementById('share-options');
+            const shareLinkInput = document.getElementById('share-link-input');
+            const copyLinkBtn = document.getElementById('copy-link-btn');
+            const editPermission = document.getElementById('edit-permission');
+            const closeShareBtn = document.getElementById('close-share-btn');
+            
+            // Sharing elements
+            const copyBtn = document.getElementById('copy-btn');
+            const copyStatus = document.getElementById('copy-status');
+            const emailBtn = document.getElementById('email-btn');
+            const emailModal = document.getElementById('email-modal');
+            const closeEmailModalBtn = document.getElementById('close-email-modal');
+            const emailClientBtns = document.querySelectorAll('.email-client-btn');
+            
+            // Initial items data - this will be overridden by Firebase data when authenticated
             let items = [
+                // Clothing Category
+                {
+                    name: 'Navy Overland T-Shirt',
+                    quantity: '1',
+                    description: 'We will send every student an Overland T-shirt prior to the trip. Please wear this T-shirt to trip start.',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                {
+                    name: 'Synthetic T-Shirt',
+                    quantity: '4',
+                    description: 'Please consider cultural sensitivity; you will be expected to have your shoulders covered.',
+                    category: 'Clothing',
+                    status: 'Need It',
+                    photoURL: null
+                },
+                // ... more initial items
+            ];
+            
+            let expandedCategories = new Set();
+            
+            // AUTH FUNCTIONALITY
+            
+            // Handle login
+            loginBtn.addEventListener('click', () => {
+              const email = emailInput.value.trim();
+              const password = passwordInput.value.trim();
+              
+              if (!email || !password) {
+                showAuthError('Please enter both email and password');
+                return;
+              }
+              
+              auth.signInWithEmailAndPassword(email, password)
+                .catch(error => {
+                  showAuthError(`Login failed: ${error.message}`);
+                });
+            });
+            
+            // Handle signup
+            signupBtn.addEventListener('click', () => {
+              const email = emailInput.value.trim();
+              const password = passwordInput.value.trim();
+              
+              if (!email || !password) {
+                showAuthError('Please enter both email and password');
+                return;
+              }
+              
+              if (password.length < 6) {
+                showAuthError('Password must be at least 6 characters');
+                return;
+              }
+              
+              auth.createUserWithEmailAndPassword(email, password)
+                .catch(error => {
+                  showAuthError(`Signup failed: ${error.message}`);
+                });
+            });
+            
+            // Handle Google signin
+            googleSigninBtn.addEventListener('click', () => {
+              const provider = new firebase.auth.GoogleAuthProvider();
+              auth.signInWithPopup(provider)
+                .catch(error => {
+                  showAuthError(`Google sign-in failed: ${error.message}`);
+                });
+            });
+            
+            // Handle logout
+            logoutBtn.addEventListener('click', () => {
+              auth.signOut();
+            });
+            
+            // Show auth error message
+            function showAuthError(message) {
+              authError.textContent = message;
+              authError.classList.remove('hidden');
+            }
+            
+            // Monitor auth state
+            auth.onAuthStateChanged(user => {
+              if (user) {
+                // User is signed in
+                userEmail.textContent = user.email;
+                loginForm.classList.add('hidden');
+                userInfo.classList.remove('hidden');
+                listControls.classList.remove('hidden');
+                
+                // Load user's lists
+                loadUserLists(user.uid);
+              } else {
+                // User is signed out
+                loginForm.classList.remove('hidden');
+                userInfo.classList.add('hidden');
+                listControls.classList.add('hidden');
+                emailInput.value = '';
+                passwordInput.value = '';
+                authError.classList.add('hidden');
+                
+                // Clear any items listener
+                if (window.itemsListener) {
+                  window.itemsListener();
+                  window.itemsListener = null;
+                }
+                
+                // Show initial items
+                updateUI();
+              }
+            });
+            
+            // FIREBASE DATABASE FUNCTIONALITY
+            
+            // Create a new list
+            async function createList(userId, listName = 'My Packing List') {
+              try {
+                const listRef = await db.collection('lists').add({
+                  name: listName,
+                  ownerId: userId,
+                  shared: false,
+                  created: firebase.firestore.FieldValue.serverTimestamp(),
+                  lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                // Use default items for new list
+                for (const item of getDefaultItems()) {
+                  await db.collection('lists').doc(listRef.id).collection('items').add({
+                    name: item.name,
+                    quantity: item.quantity,
+                    description: item.description,
+                    category: item.category,
+                    status: item.status,
+                    photoURL: null,
+                    created: firebase.firestore.FieldValue.serverTimestamp(),
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                  });
+                }
+                
+                return listRef.id;
+              } catch (error) {
+                console.error('Error creating list:', error);
+                return null;
+              }
+            }
+            
+            // Load user's lists
+            async function loadUserLists(userId) {
+              try {
+                // Check if user has any lists
+                const listsSnapshot = await db.collection('lists')
+                  .where('ownerId', '==', userId)
+                  .orderBy('lastUpdated', 'desc')
+                  .limit(1)
+                  .get();
+                
+                let currentListId;
+                
+                // If no lists exist, create a default one
+                if (listsSnapshot.empty) {
+                  currentListId = await createList(userId);
+                  currentListName.textContent = 'My Packing List';
+                } else {
+                  const listDoc = listsSnapshot.docs[0];
+                  currentListId = listDoc.id;
+                  currentListName.textContent = listDoc.data().name;
+                }
+                
+                // Start real-time listener for the current list
+                if (currentListId) {
+                  loadListItems(currentListId);
+                }
+              } catch (error) {
+                console.error('Error loading user lists:', error);
+              }
+            }
+            
+            // Load items from a specific list
+            function loadListItems(listId) {
+              // Clear previous listener if any
+              if (window.itemsListener) {
+                window.itemsListener();
+              }
+              
+              // Store current list ID
+              window.currentListId = listId;
+              
+              // Create real-time listener for items
+              window.itemsListener = db.collection('lists').doc(listId)
+                .collection('items')
+                .orderBy('category')
+                .onSnapshot(snapshot => {
+                  // Convert to our items format
+                  items = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    name: doc.data().name,
+                    quantity: doc.data().quantity,
+                    description: doc.data().description,
+                    category: doc.data().category,
+                    status: doc.data().status,
+                    photoURL: doc.data().photoURL
+                  }));
+                  
+                  // Update the UI
+                  updateUI();
+                }, error => {
+                  console.error('Error loading items:', error);
+                });
+            }
+            
+            // Get default items for new list
+            function getDefaultItems() {
+              return [
                 // Clothing Category
                 {
                     name: 'Navy Overland T-Shirt',
@@ -255,95 +516,6 @@
                     status: 'Need It',
                     photoURL: null
                 },
-                {
-                    name: 'Fleece Pants',
-                    quantity: '1',
-                    description: 'Please do not bring cotton sweatpants (they are heavy and bulky and will not keep you warm if wet).',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Synthetic Long Underwear Top and Bottom',
-                    quantity: '2',
-                    description: '',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Underwear',
-                    quantity: '7',
-                    description: '',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Athletic Socks',
-                    quantity: '2',
-                    description: '',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Wool and/or Synthetic Socks',
-                    quantity: '3',
-                    description: '',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Neck Gaiter or Buff',
-                    quantity: '1',
-                    description: '',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Gloves or Mittens',
-                    quantity: '2',
-                    description: 'One pair of insulated, warm and waterproof gloves or mittens, and one pair of liner gloves for cool nights around camp.',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Winter Hat',
-                    quantity: '1',
-                    description: '',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Hat with Visor',
-                    quantity: '1',
-                    description: '',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Bandana',
-                    quantity: 'optional',
-                    description: '',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Pajamas',
-                    quantity: 'optional',
-                    description: 'Students sometimes prefer to sleep in shorts and a T-shirt instead of pajamas.',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                
                 // Outer Layers Category
                 {
                     name: 'Fleece Jacket or Pullover',
@@ -354,101 +526,18 @@
                     photoURL: null
                 },
                 {
-                    name: 'Midweight Synthetic or Down Jacket',
-                    quantity: '1',
-                    description: '',
-                    category: 'Outer Layers',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
                     name: 'Raincoat',
                     quantity: '1',
-                    description: 'Waterproof material (e.g., Gore-Tex, or similar) is required. Your jacket should be large enough to allow layers underneath. Ponchos are not acceptable.',
+                    description: 'Waterproof material (e.g., Gore-Tex, or similar) is required.',
                     category: 'Outer Layers',
                     status: 'Need It',
                     photoURL: null
                 },
-                {
-                    name: 'Waterproof Rain Pants',
-                    quantity: '1',
-                    description: '',
-                    category: 'Outer Layers',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                
-                // General Gear Category
-                {
-                    name: 'Sleeping Bag',
-                    quantity: '1',
-                    description: 'A lightweight, compact sleeping bag rated to 40 degrees Fahrenheit or less. We recommend either synthetic or treated down material. Your sleeping bag should compress into a stuff sack no larger than 20" in length.',
-                    category: 'General Gear',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Sleeping Pad',
-                    quantity: '1',
-                    description: '¾-length or full-length closed cell foam (thin and firm) or lightweight, backpacking style inflatable pad.',
-                    category: 'General Gear',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Bowl, Mug and Utensils',
-                    quantity: '1 set',
-                    description: '6" to 8" plastic dish or bowl with top, insulated plastic mug, spoon, fork, and knife. These don\'t need to be special camping utensils (a Tupperware dish and regular utensils are fine).',
-                    category: 'General Gear',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Headlamp',
-                    quantity: '1',
-                    description: 'Please bring an extra battery/batteries.',
-                    category: 'General Gear',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Water Bottle',
-                    quantity: '1',
-                    description: 'One 1-liter bottle. A Camelbak or similar water carrier is acceptable.',
-                    category: 'General Gear',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Hydration System',
-                    quantity: '1',
-                    description: 'One 2-liter hydration bladder (e.g., CamelBak or Platypus) is required.',
-                    category: 'General Gear',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Gaiters',
-                    quantity: '1 pair',
-                    description: 'Calf-height, waterproof gaiters to protect your legs and feet when hiking through brush, or crossing snow fields or streams.',
-                    category: 'General Gear',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Adjustable Hiking Poles',
-                    quantity: 'Optional',
-                    description: 'Overland will provide students adjustable hiking poles to use during the Kilimanjaro climb. However, if students prefer to bring their own pair of poles to use for the duration of the trip, they certainly can.',
-                    category: 'General Gear',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                
                 // Footwear Category
                 {
                     name: 'Waterproof Hiking Boots',
                     quantity: '1 pair',
-                    description: 'Choose comfortable boots designed for hiking with a pack (i.e., mid to high cut for ankle support). Boots should be waterproof. Break them in before the start of your trip.',
+                    description: 'Choose comfortable boots designed for hiking with a pack.',
                     category: 'Footwear',
                     status: 'Need It',
                     photoURL: null
@@ -456,175 +545,17 @@
                 {
                     name: 'Sneakers',
                     quantity: '1 pair',
-                    description: 'Comfortable shoes with good traction and stability, suitable for walking on varied and rocky terrain.',
+                    description: 'Comfortable shoes with good traction.',
                     category: 'Footwear',
                     status: 'Need It',
                     photoURL: null
-                },
-                {
-                    name: 'Sandals',
-                    quantity: '1 pair',
-                    description: 'Flip flops or Crocs work well.',
-                    category: 'Footwear',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                
-                // Miscellaneous Category
-                {
-                    name: 'Synthetic Camping Towel',
-                    quantity: '1',
-                    description: 'A medium-size synthetic camping towel (synthetic camping towels dry much faster than regular towels).',
-                    category: 'Miscellaneous',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Travel Size Toiletries',
-                    quantity: '1 set',
-                    description: '',
-                    category: 'Miscellaneous',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Sunglasses',
-                    quantity: '1',
-                    description: '',
-                    category: 'Miscellaneous',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Sunscreen and Chapstick',
-                    quantity: '1 each',
-                    description: 'SPF 15+ and Chapstick with SPF protection',
-                    category: 'Miscellaneous',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Gallon Sized Ziploc Bags',
-                    quantity: '5',
-                    description: 'To organize and waterproof your gear and small items.',
-                    category: 'Miscellaneous',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Community Donation Items',
-                    quantity: 'Optional',
-                    description: 'Reading and reference books, arts and crafts/school materials (markers, paint brushes, pens, and pencils), secondhand clothing items (including t-shirts, boxes/underwear, warmer layers, and jeans), and recreation items (soccer and basketballs, other soccer equipment and apparel, etc.). Please reach out if you have additional questions about donating items.',
-                    category: 'Miscellaneous',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Notebook and Pen',
-                    quantity: '1 each',
-                    description: '',
-                    category: 'Miscellaneous',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Camera, Charger and Extra Batteries',
-                    quantity: 'Optional',
-                    description: 'A digital or disposable camera.',
-                    category: 'Miscellaneous',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Personal Journal or Book',
-                    quantity: 'Optional',
-                    description: '',
-                    category: 'Miscellaneous',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                
-                // Documents and Extra Funds Category
-                {
-                    name: 'Passport',
-                    quantity: '1',
-                    description: 'Please bring a passport that is valid until at least six months after your trip end date.',
-                    category: 'Documents and Extra Funds',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Single Entry Visa for Tanzania',
-                    quantity: '1',
-                    description: 'More information on how to obtain a single entry visa is provided to enrolled students.',
-                    category: 'Documents and Extra Funds',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Permission to Travel to and From Tanzania',
-                    quantity: '1',
-                    description: 'Students under 18 should bring the original, signed copy of their Permission to Travel to and from Tanzania form, and should store it together with their passport.',
-                    category: 'Documents and Extra Funds',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Passport Photocopies',
-                    quantity: '4+',
-                    description: 'Make at least four photocopies of your passport and visa (if applicable). Leave one copy with your family and put photocopies in both your checked luggage and carry-on luggage for the flight, separate from your original documents.',
-                    category: 'Documents and Extra Funds',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Health Insurance Card',
-                    quantity: '1',
-                    description: 'Please bring an original or copy of your health insurance card.',
-                    category: 'Documents and Extra Funds',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Spending Money',
-                    quantity: '$25/week',
-                    description: 'Each student should bring cash or a debit card to cover spending money and miscellaneous expenses. Debit cards provide a good exchange rate. Leaders can also help students convert cash to local currency at the airport at the start of the trip. While all meals and activities are included in the trip fee, we recommend $25/week for spending money (for example: for souvenirs or an occasional drink or snack beyond what is provided to the group as a whole). Excess spending money is not necessary for a wonderful Overland experience. Please note: We have found that prepaid Visa cards and AMEX cards do not work internationally.',
-                    category: 'Documents and Extra Funds',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Miscellaneous Funds',
-                    quantity: '$100',
-                    description: 'Most Overland students will incur some expenses while traveling (for example: an equipment repair or baggage fees at trip end). Please provide your child with $100 (in addition to spending money), to cover these expenses.',
-                    category: 'Documents and Extra Funds',
-                    status: 'Need It',
-                    photoURL: null
                 }
-            ];
-            
-            let expandedCategories = new Set();
-            
-            // Try to load saved items from localStorage
-            try {
-                const savedItems = localStorage.getItem('packingItems');
-                if (savedItems) {
-                    items = JSON.parse(savedItems);
-                }
-            } catch (e) {
-                console.error('Error loading saved items:', e);
+              ];
             }
             
             // Function to update the UI based on items array
             function updateUI() {
                 categoriesContainer.innerHTML = '';
-                
-                // Save to localStorage
-                try {
-                    localStorage.setItem('packingItems', JSON.stringify(items));
-                } catch (e) {
-                    console.error('Error saving items:', e);
-                }
                 
                 // Group items by category
                 const categories = {};
@@ -698,7 +629,7 @@
                     }
                     
                     // Add items to category
-                    categoryItems.forEach((item, index) => {
+                    categoryItems.forEach((item) => {
                         const itemElement = document.createElement('div');
                         itemElement.className = 'p-4';
                         
@@ -714,11 +645,31 @@
                         itemName.textContent = `${item.name} (${item.quantity})`;
                         
                         const deleteBtn = document.createElement('button');
-                        deleteBtn.className = 'text-red-500 hover:text-red-700 transition-colors ml-2 flex-shrink-0';
+                        deleteBtn.className = 'text-red-500 hover:text-red-700 transition-colors ml-2 flex-shrink-0 delete-btn';
                         deleteBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>';
-                        deleteBtn.addEventListener('click', () => {
-                            items = items.filter((_, i) => !(item.category === category && i === index));
-                            updateUI();
+                        
+                        // Delete functionality
+                        deleteBtn.addEventListener('click', async () => {
+                            // Check if we're authenticated and have a list ID
+                            if (window.currentListId && auth.currentUser) {
+                                try {
+                                    await db.collection('lists').doc(window.currentListId)
+                                        .collection('items').doc(item.id).delete();
+                                    
+                                    // Update the list's last updated timestamp
+                                    await db.collection('lists').doc(window.currentListId).update({
+                                        lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                                    });
+                                    
+                                    // UI will update automatically via the listener
+                                } catch (error) {
+                                    console.error('Error deleting item:', error);
+                                }
+                            } else {
+                                // Fallback for non-auth mode
+                                items = items.filter(i => i.id !== item.id);
+                                updateUI();
+                            }
                         });
                         
                         itemNameDiv.appendChild(itemName);
@@ -738,9 +689,10 @@
                         const statuses = ['Need It', 'Have It', 'Packed It'];
                         statuses.forEach(status => {
                             const statusBtn = document.createElement('button');
+                            statusBtn.classList.add('status-btn');
                             
                             if (item.status === status) {
-                                statusBtn.className = 'px-3 py-1 rounded-full text-white';
+                                statusBtn.className = 'px-3 py-1 rounded-full text-white status-btn';
                                 if (status === 'Need It') {
                                     statusBtn.classList.add('bg-red-500');
                                 } else if (status === 'Have It') {
@@ -749,18 +701,48 @@
                                     statusBtn.classList.add('bg-green-500');
                                 }
                             } else {
-                                statusBtn.className = 'px-3 py-1 rounded-full text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors';
+                                statusBtn.className = 'px-3 py-1 rounded-full text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors status-btn';
                             }
                             
                             statusBtn.textContent = status;
-                            statusBtn.addEventListener('click', () => {
-                                // If changing from a status that required a photo to "Need It", remove the photo
-                                if (status === 'Need It' && (item.status === 'Have It' || item.status === 'Packed It')) {
-                                    item.photoURL = null;
+                            
+                            // Status button functionality
+                            statusBtn.addEventListener('click', async () => {
+                                // Check if we're authenticated and have a list ID
+                                if (window.currentListId && auth.currentUser) {
+                                    try {
+                                        // If changing from a status that required a photo to "Need It", remove the photo
+                                        let photoURL = item.photoURL;
+                                        if (status === 'Need It' && (item.status === 'Have It' || item.status === 'Packed It')) {
+                                            photoURL = null;
+                                        }
+                                        
+                                        await db.collection('lists').doc(window.currentListId)
+                                            .collection('items').doc(item.id).update({
+                                                status: status,
+                                                photoURL: photoURL,
+                                                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                                            });
+                                        
+                                        // Update the list's last updated timestamp
+                                        await db.collection('lists').doc(window.currentListId).update({
+                                            lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                                        });
+                                        
+                                        // UI will update automatically via the listener
+                                    } catch (error) {
+                                        console.error('Error updating item status:', error);
+                                    }
+                                } else {
+                                    // Fallback for non-auth mode
+                                    // If changing from a status that required a photo to "Need It", remove the photo
+                                    if (status === 'Need It' && (item.status === 'Have It' || item.status === 'Packed It')) {
+                                        item.photoURL = null;
+                                    }
+                                    
+                                    item.status = status;
+                                    updateUI();
                                 }
-                                
-                                item.status = status;
-                                updateUI();
                             });
                             
                             statusDiv.appendChild(statusBtn);
@@ -768,9 +750,10 @@
                         
                         // Create photo upload section if "Have It" or "Packed It" is selected
                         let photoDiv = document.createElement('div');
+                        photoDiv.className = 'photo-upload';
                         
                         if (item.status === 'Have It' || item.status === 'Packed It') {
-                            photoDiv.className = 'mt-4';
+                            photoDiv.className = 'mt-4 photo-upload';
                             
                             if (item.photoURL) {
                                 // Display the photo if it exists
@@ -789,9 +772,31 @@
                                 const changePhotoBtn = document.createElement('button');
                                 changePhotoBtn.className = 'text-primary text-sm underline mb-2 block';
                                 changePhotoBtn.textContent = 'Change Photo';
-                                changePhotoBtn.addEventListener('click', () => {
-                                    item.photoURL = null;
-                                    updateUI();
+                                
+                                // Photo change functionality 
+                                changePhotoBtn.addEventListener('click', async () => {
+                                    if (window.currentListId && auth.currentUser) {
+                                        try {
+                                            await db.collection('lists').doc(window.currentListId)
+                                                .collection('items').doc(item.id).update({
+                                                    photoURL: null,
+                                                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                                                });
+                                            
+                                            // Update the list's last updated timestamp
+                                            await db.collection('lists').doc(window.currentListId).update({
+                                                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                                            });
+                                            
+                                            // UI will update automatically via the listener
+                                        } catch (error) {
+                                            console.error('Error removing photo:', error);
+                                        }
+                                    } else {
+                                        // Fallback for non-auth mode
+                                        item.photoURL = null;
+                                        updateUI();
+                                    }
                                 });
                                 
                                 photoDiv.appendChild(changePhotoBtn);
@@ -806,9 +811,44 @@
                                 fileInput.accept = 'image/*';
                                 fileInput.className = 'block w-full text-sm text-gray-900 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90';
                                 
-                                fileInput.addEventListener('change', (event) => {
+                                // File upload functionality
+                                fileInput.addEventListener('change', async (event) => {
                                     const file = event.target.files[0];
-                                    if (file) {
+                                    if (!file) return;
+                                    
+                                    if (window.currentListId && auth.currentUser) {
+                                        try {
+                                            // Show loading state
+                                            const loadingEl = document.createElement('p');
+                                            loadingEl.textContent = 'Uploading photo...';
+                                            loadingEl.className = 'text-sm text-gray-600 dark:text-gray-400';
+                                            photoDiv.appendChild(loadingEl);
+                                            
+                                            // Upload to Firebase Storage
+                                            const storageRef = storage.ref(`lists/${window.currentListId}/items/${item.id}`);
+                                            const fileRef = storageRef.child(`${Date.now()}_${file.name}`);
+                                            const snapshot = await fileRef.put(file);
+                                            const photoURL = await snapshot.ref.getDownloadURL();
+                                            
+                                            // Update item with photo URL
+                                            await db.collection('lists').doc(window.currentListId)
+                                                .collection('items').doc(item.id).update({
+                                                    photoURL: photoURL,
+                                                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                                                });
+                                            
+                                            // Update list timestamp
+                                            await db.collection('lists').doc(window.currentListId).update({
+                                                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                                            });
+                                            
+                                            // UI will update automatically via the listener
+                                        } catch (error) {
+                                            console.error('Error uploading photo:', error);
+                                            alert('Failed to upload photo. Please try again.');
+                                        }
+                                    } else {
+                                        // Fallback for non-auth mode
                                         const reader = new FileReader();
                                         reader.onload = (e) => {
                                             item.photoURL = e.target.result;
@@ -836,14 +876,71 @@
                     categoryElement.appendChild(categoryContent);
                     categoriesContainer.appendChild(categoryElement);
                 });
+                
+                // For shared lists with view-only permission, adjust UI
+                if (window.isSharedList && !window.canEdit) {
+                    // Hide delete buttons
+                    document.querySelectorAll('.delete-btn').forEach(btn => {
+                        btn.classList.add('hidden');
+                    });
+                    
+                    // Disable status buttons
+                    document.querySelectorAll('.status-btn').forEach(btn => {
+                        btn.disabled = true;
+                        btn.classList.add('opacity-50');
+                    });
+                    
+                    // Hide photo uploads
+                    document.querySelectorAll('.photo-upload').forEach(el => {
+                        el.classList.add('hidden');
+                    });
+                    
+                    // Disable item input
+                    newItemInput.disabled = true;
+                    addItemBtn.disabled = true;
+                    addItemBtn.classList.add('opacity-50');
+                }
             }
             
             // Add a new item
-            function addNewItem() {
+            async function addNewItem() {
                 const itemName = newItemInput.value.trim();
                 
-                if (itemName !== '') {
+                if (itemName === '') return;
+                
+                if (window.currentListId && auth.currentUser) {
+                    try {
+                        await db.collection('lists').doc(window.currentListId)
+                          .collection('items').add({
+                            name: itemName,
+                            quantity: '1',
+                            description: '',
+                            category: 'Custom Items',
+                            status: 'Need It',
+                            photoURL: null,
+                            created: firebase.firestore.FieldValue.serverTimestamp(),
+                            lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                          });
+                        
+                        // Update the list's last updated timestamp
+                        await db.collection('lists').doc(window.currentListId).update({
+                          lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        
+                        // Expand the Custom Items category
+                        expandedCategories.add('Custom Items');
+                        
+                        // Clear input
+                        newItemInput.value = '';
+                        
+                        // UI will update automatically via the onSnapshot listener
+                    } catch (error) {
+                        console.error('Error adding item:', error);
+                    }
+                } else {
+                    // Fallback for non-auth mode
                     items.push({
+                        id: Date.now().toString(), // Generate a temp ID
                         name: itemName,
                         quantity: '1',
                         description: '',
@@ -860,122 +957,136 @@
                 }
             }
             
-            // Export list (generate shareable code)
-            exportListBtn.addEventListener('click', () => {
-                // Generate a simplified version of the list without photos
-                const exportItems = items.map(item => {
-                    // Create a simplified item without photoURL data
-                    return {
-                        name: item.name,
-                        quantity: item.quantity,
-                        description: item.description,
-                        category: item.category,
-                        status: item.status
-                    };
-                });
-                
-                // Create the export object
-                const exportData = {
-                    version: 1,
-                    timestamp: new Date().toISOString(),
-                    items: exportItems
-                };
-                
-                // Convert to JSON and then to Base64
-                const jsonStr = JSON.stringify(exportData);
-                const base64Str = btoa(jsonStr);
-                
-                // Display the export code
-                exportCode.value = base64Str;
-                exportDialog.classList.remove('hidden');
-            });
+            // LIST SHARING FUNCTIONALITY
             
-            // Copy export code to clipboard
-            copyExportBtn.addEventListener('click', () => {
-                exportCode.select();
-                document.execCommand('copy');
-                
-                // Show success message
-                shareStatus.textContent = "Shareable code copied to clipboard!";
-                shareStatus.className = "text-sm text-center text-green-600 dark:text-green-400";
-                shareStatus.classList.remove('hidden');
-                
-                // Hide message after 3 seconds
-                setTimeout(() => {
-                    shareStatus.classList.add('hidden');
-                }, 3000);
-            });
-            
-            // Close export dialog
-            closeExportBtn.addEventListener('click', () => {
-                exportDialog.classList.add('hidden');
-            });
-            
-            // Import list
-            importListBtn.addEventListener('click', () => {
-                importDialog.classList.remove('hidden');
-                importError.classList.add('hidden');
-                importCode.value = '';
-            });
-            
-            // Process import
-            doImportBtn.addEventListener('click', () => {
-                const code = importCode.value.trim();
-                
-                if (!code) {
-                    importError.textContent = "Please enter a code.";
-                    importError.classList.remove('hidden');
-                    return;
+            // Create new list
+            newListBtn.addEventListener('click', async () => {
+                const listName = prompt('Enter a name for your new list:');
+                if (listName && auth.currentUser) {
+                    const listId = await createList(auth.currentUser.uid, listName);
+                    if (listId) {
+                        currentListName.textContent = listName;
+                        loadListItems(listId);
+                    }
                 }
+            });
+            
+            // Share list
+            shareListBtn.addEventListener('click', async () => {
+                if (!window.currentListId || !auth.currentUser) return;
                 
                 try {
-                    // Decode from Base64 to JSON
-                    const jsonStr = atob(code);
-                    const importData = JSON.parse(jsonStr);
+                    // Generate a unique share ID
+                    const shareId = generateSharedId();
                     
-                    // Validate the import data
-                    if (!importData.version || !importData.items || !Array.isArray(importData.items)) {
-                        throw new Error("Invalid import data format");
-                    }
-                    
-                    // Import the items
-                    const importedItems = importData.items.map(item => {
-                        return {
-                            name: item.name || "Unknown item",
-                            quantity: item.quantity || "1",
-                            description: item.description || "",
-                            category: item.category || "Custom Items",
-                            status: item.status || "Need It",
-                            photoURL: null // Reset photos for imported items
-                        };
+                    // Update the list to be shared
+                    await db.collection('lists').doc(window.currentListId).update({
+                        shared: true,
+                        shareId: shareId,
+                        allowEdit: editPermission.checked,
+                        lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
                     });
                     
-                    // Replace current items with imported ones
-                    items = importedItems;
-                    updateUI();
+                    // Generate a shareable link
+                    const shareLink = `${window.location.origin}?list=${shareId}`;
+                    shareLinkInput.value = shareLink;
                     
-                    // Close dialog and show success message
-                    importDialog.classList.add('hidden');
-                    shareStatus.textContent = "List imported successfully!";
-                    shareStatus.className = "text-sm text-center text-green-600 dark:text-green-400";
-                    shareStatus.classList.remove('hidden');
-                    
-                    // Hide message after 3 seconds
-                    setTimeout(() => {
-                        shareStatus.classList.add('hidden');
-                    }, 3000);
-                    
-                } catch (e) {
-                    console.error('Error importing list:', e);
-                    importError.textContent = "Invalid code. Please check and try again.";
-                    importError.classList.remove('hidden');
+                    // Show share options
+                    shareOptions.classList.remove('hidden');
+                } catch (error) {
+                    console.error('Error sharing list:', error);
+                    alert('Failed to share list. Please try again.');
                 }
             });
             
-            // Close import dialog
-            closeImportBtn.addEventListener('click', () => {
-                importDialog.classList.add('hidden');
+            // Copy share link
+            copyLinkBtn.addEventListener('click', () => {
+                shareLinkInput.select();
+                document.execCommand('copy');
+                copyLinkBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyLinkBtn.textContent = 'Copy';
+                }, 2000);
             });
+            
+            // Toggle edit permission
+            editPermission.addEventListener('change', async () => {
+                if (!window.currentListId || !auth.currentUser) return;
+                
+                try {
+                    await db.collection('lists').doc(window.currentListId).update({
+                        allowEdit: editPermission.checked,
+                        lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                } catch (error) {
+                    console.error('Error updating share permissions:', error);
+                }
+            });
+            
+            // Close share options
+            closeShareBtn.addEventListener('click', () => {
+                shareOptions.classList.add('hidden');
+            });
+            
+            // Generate a unique shared ID
+            function generateSharedId() {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                let result = '';
+                for (let i = 0; i < 10; i++) {
+                    result += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return result;
+            }
+            
+            // Check for shared list in URL
+            function checkForSharedList() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const sharedListId = urlParams.get('list');
+                
+                if (sharedListId) {
+                    loadSharedList(sharedListId);
+                }
+            }
+            
+            // Load a shared list
+            async function loadSharedList(shareId) {
+                try {
+                    // Find the list with this share ID
+                    const listQuery = await db.collection('lists')
+                        .where('shareId', '==', shareId)
+                        .where('shared', '==', true)
+                        .limit(1)
+                        .get();
+                    
+                    if (!listQuery.empty) {
+                        const listDoc = listQuery.docs[0];
+                        const listData = listDoc.data();
+                        
+                        // Update UI to show this is a shared list
+                        currentListName.textContent = `${listData.name} (Shared)`;
+                        
+                        // Load the items
+                        window.currentListId = listDoc.id;
+                        window.isSharedList = true;
+                        window.canEdit = listData.allowEdit;
+                        
+                        // Show the list controls
+                        listControls.classList.remove('hidden');
+                        
+                        // Hide sharing controls for shared list viewers
+                        shareListBtn.classList.add('hidden');
+                        
+                        loadListItems(listDoc.id);
+                    } else {
+                        alert('Shared list not found or no longer available.');
+                    }
+                } catch (error) {
+                    console.error('Error loading shared list:', error);
+                    alert('Failed to load shared list.');
+                }
+            }
+            
+            // STANDARD LIST FUNCTIONALITY
             
             // Generate formatted text for sharing
             function generateFormattedList() {
@@ -989,6 +1100,12 @@
                 });
                 
                 let formattedText = "OVERLAND PACKING CHECKLIST\n\n";
+                
+                // Add shared list info if applicable
+                if (window.currentListId && window.isSharedList) {
+                    formattedText += `Shared List: ${currentListName.textContent}\n`;
+                    formattedText += `List URL: ${window.location.href}\n\n`;
+                }
                 
                 // Add summary
                 const packedCount = items.filter(item => item.status === 'Packed It').length;
@@ -1025,9 +1142,6 @@
             }
             
             // Share via clipboard
-            const copyBtn = document.getElementById('copy-btn');
-            const copyStatus = document.getElementById('copy-status');
-            
             copyBtn.addEventListener('click', () => {
                 const formattedList = generateFormattedList();
                 
@@ -1054,12 +1168,6 @@
             });
             
             // Email modal functionality
-            const emailBtn = document.getElementById('email-btn');
-            const emailModal = document.getElementById('email-modal');
-            const closeEmailModalBtn = document.getElementById('close-email-modal');
-            const emailClientBtns = document.querySelectorAll('.email-client-btn');
-            
-            // Show email modal when clicking share via email
             emailBtn.addEventListener('click', () => {
                 emailModal.classList.remove('hidden');
             });
@@ -1123,8 +1231,9 @@
                 updateUI();
             });
             
-            // Initialize the UI
+            // Initialize
             updateUI();
+            checkForSharedList();
         });
     </script>
 </body>
