@@ -473,85 +473,399 @@
             }
             
             // Get default items for new list
-            function getDefaultItems() {
-              return [
-                // Clothing Category
-                {
-                    name: 'Navy Overland T-Shirt',
-                    quantity: '1',
-                    description: 'We will send every student an Overland T-shirt prior to the trip. Please wear this T-shirt to trip start.',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Synthetic T-Shirt',
-                    quantity: '4',
-                    description: 'Please consider cultural sensitivity; you will be expected to have your shoulders covered.',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Synthetic Long-Sleeve T-shirt',
-                    quantity: '1',
-                    description: '',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Synthetic Shorts',
-                    quantity: '2',
-                    description: '',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Synthetic Hiking Pants',
-                    quantity: '2',
-                    description: 'Lightweight and quick dry material. Non-cotton warmup style pants are acceptable.',
-                    category: 'Clothing',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                // Outer Layers Category
-                {
-                    name: 'Fleece Jacket or Pullover',
-                    quantity: '1',
-                    description: '',
-                    category: 'Outer Layers',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Raincoat',
-                    quantity: '1',
-                    description: 'Waterproof material (e.g., Gore-Tex, or similar) is required.',
-                    category: 'Outer Layers',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                // Footwear Category
-                {
-                    name: 'Waterproof Hiking Boots',
-                    quantity: '1 pair',
-                    description: 'Choose comfortable boots designed for hiking with a pack.',
-                    category: 'Footwear',
-                    status: 'Need It',
-                    photoURL: null
-                },
-                {
-                    name: 'Sneakers',
-                    quantity: '1 pair',
-                    description: 'Comfortable shoes with good traction.',
-                    category: 'Footwear',
-                    status: 'Need It',
-                    photoURL: null
-                }
-              ];
-            }
+      // Replace the current getDefaultItems() function with this complete version:
+
+function getDefaultItems() {
+  return [
+    // Clothing Category
+    {
+        name: 'Navy Overland T-Shirt',
+        quantity: '1',
+        description: 'We will send every student an Overland T-shirt prior to the trip. Please wear this T-shirt to trip start.',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Synthetic T-Shirt',
+        quantity: '4',
+        description: 'Please consider cultural sensitivity; you will be expected to have your shoulders covered.',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Synthetic Long-Sleeve T-shirt',
+        quantity: '1',
+        description: '',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Synthetic Shorts',
+        quantity: '2',
+        description: '',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Synthetic Hiking Pants',
+        quantity: '2',
+        description: 'Lightweight and quick dry material. Non-cotton warmup style pants are acceptable.',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Fleece Pants',
+        quantity: '1',
+        description: 'Please do not bring cotton sweatpants (they are heavy and bulky and will not keep you warm if wet).',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Synthetic Long Underwear Top and Bottom',
+        quantity: '2',
+        description: '',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Underwear',
+        quantity: '7',
+        description: '',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Athletic Socks',
+        quantity: '2',
+        description: '',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Wool and/or Synthetic Socks',
+        quantity: '3',
+        description: '',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Neck Gaiter or Buff',
+        quantity: '1',
+        description: '',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Gloves or Mittens',
+        quantity: '2',
+        description: 'One pair of insulated, warm and waterproof gloves or mittens, and one pair of liner gloves for cool nights around camp.',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Winter Hat',
+        quantity: '1',
+        description: '',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Hat with Visor',
+        quantity: '1',
+        description: '',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Bandana',
+        quantity: 'optional',
+        description: '',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Pajamas',
+        quantity: 'optional',
+        description: 'Students sometimes prefer to sleep in shorts and a T-shirt instead of pajamas.',
+        category: 'Clothing',
+        status: 'Need It',
+        photoURL: null
+    },
+    
+    // Outer Layers Category
+    {
+        name: 'Fleece Jacket or Pullover',
+        quantity: '1',
+        description: '',
+        category: 'Outer Layers',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Midweight Synthetic or Down Jacket',
+        quantity: '1',
+        description: '',
+        category: 'Outer Layers',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Raincoat',
+        quantity: '1',
+        description: 'Waterproof material (e.g., Gore-Tex, or similar) is required. Your jacket should be large enough to allow layers underneath. Ponchos are not acceptable.',
+        category: 'Outer Layers',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Waterproof Rain Pants',
+        quantity: '1',
+        description: '',
+        category: 'Outer Layers',
+        status: 'Need It',
+        photoURL: null
+    },
+    
+    // General Gear Category
+    {
+        name: 'Sleeping Bag',
+        quantity: '1',
+        description: 'A lightweight, compact sleeping bag rated to 40 degrees Fahrenheit or less. We recommend either synthetic or treated down material. Your sleeping bag should compress into a stuff sack no larger than 20" in length.',
+        category: 'General Gear',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Sleeping Pad',
+        quantity: '1',
+        description: '¾-length or full-length closed cell foam (thin and firm) or lightweight, backpacking style inflatable pad.',
+        category: 'General Gear',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Bowl, Mug and Utensils',
+        quantity: '1 set',
+        description: '6" to 8" plastic dish or bowl with top, insulated plastic mug, spoon, fork, and knife. These don\'t need to be special camping utensils (a Tupperware dish and regular utensils are fine).',
+        category: 'General Gear',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Headlamp',
+        quantity: '1',
+        description: 'Please bring an extra battery/batteries.',
+        category: 'General Gear',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Water Bottle',
+        quantity: '1',
+        description: 'One 1-liter bottle. A Camelbak or similar water carrier is acceptable.',
+        category: 'General Gear',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Hydration System',
+        quantity: '1',
+        description: 'One 2-liter hydration bladder (e.g., CamelBak or Platypus) is required.',
+        category: 'General Gear',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Gaiters',
+        quantity: '1 pair',
+        description: 'Calf-height, waterproof gaiters to protect your legs and feet when hiking through brush, or crossing snow fields or streams.',
+        category: 'General Gear',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Adjustable Hiking Poles',
+        quantity: 'Optional',
+        description: 'Overland will provide students adjustable hiking poles to use during the Kilimanjaro climb. However, if students prefer to bring their own pair of poles to use for the duration of the trip, they certainly can.',
+        category: 'General Gear',
+        status: 'Need It',
+        photoURL: null
+    },
+    
+    // Footwear Category
+    {
+        name: 'Waterproof Hiking Boots',
+        quantity: '1 pair',
+        description: 'Choose comfortable boots designed for hiking with a pack (i.e., mid to high cut for ankle support). Boots should be waterproof. Break them in before the start of your trip.',
+        category: 'Footwear',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Sneakers',
+        quantity: '1 pair',
+        description: 'Comfortable shoes with good traction and stability, suitable for walking on varied and rocky terrain.',
+        category: 'Footwear',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Sandals',
+        quantity: '1 pair',
+        description: 'Flip flops or Crocs work well.',
+        category: 'Footwear',
+        status: 'Need It',
+        photoURL: null
+    },
+    
+    // Miscellaneous Category
+    {
+        name: 'Synthetic Camping Towel',
+        quantity: '1',
+        description: 'A medium-size synthetic camping towel (synthetic camping towels dry much faster than regular towels).',
+        category: 'Miscellaneous',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Travel Size Toiletries',
+        quantity: '1 set',
+        description: '',
+        category: 'Miscellaneous',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Sunglasses',
+        quantity: '1',
+        description: '',
+        category: 'Miscellaneous',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Sunscreen and Chapstick',
+        quantity: '1 each',
+        description: 'SPF 15+ and Chapstick with SPF protection',
+        category: 'Miscellaneous',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Gallon Sized Ziploc Bags',
+        quantity: '5',
+        description: 'To organize and waterproof your gear and small items.',
+        category: 'Miscellaneous',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Community Donation Items',
+        quantity: 'Optional',
+        description: 'Reading and reference books, arts and crafts/school materials (markers, paint brushes, pens, and pencils), secondhand clothing items (including t-shirts, boxes/underwear, warmer layers, and jeans), and recreation items (soccer and basketballs, other soccer equipment and apparel, etc.). Please reach out if you have additional questions about donating items.',
+        category: 'Miscellaneous',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Notebook and Pen',
+        quantity: '1 each',
+        description: '',
+        category: 'Miscellaneous',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Camera, Charger and Extra Batteries',
+        quantity: 'Optional',
+        description: 'A digital or disposable camera.',
+        category: 'Miscellaneous',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Personal Journal or Book',
+        quantity: 'Optional',
+        description: '',
+        category: 'Miscellaneous',
+        status: 'Need It',
+        photoURL: null
+    },
+    
+    // Documents and Extra Funds Category
+    {
+        name: 'Passport',
+        quantity: '1',
+        description: 'Please bring a passport that is valid until at least six months after your trip end date.',
+        category: 'Documents and Extra Funds',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Single Entry Visa for Tanzania',
+        quantity: '1',
+        description: 'More information on how to obtain a single entry visa is provided to enrolled students.',
+        category: 'Documents and Extra Funds',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Permission to Travel to and From Tanzania',
+        quantity: '1',
+        description: 'Students under 18 should bring the original, signed copy of their Permission to Travel to and from Tanzania form, and should store it together with their passport.',
+        category: 'Documents and Extra Funds',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Passport Photocopies',
+        quantity: '4+',
+        description: 'Make at least four photocopies of your passport and visa (if applicable). Leave one copy with your family and put photocopies in both your checked luggage and carry-on luggage for the flight, separate from your original documents.',
+        category: 'Documents and Extra Funds',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Health Insurance Card',
+        quantity: '1',
+        description: 'Please bring an original or copy of your health insurance card.',
+        category: 'Documents and Extra Funds',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Spending Money',
+        quantity: '$25/week',
+        description: 'Each student should bring cash or a debit card to cover spending money and miscellaneous expenses. Debit cards provide a good exchange rate. Leaders can also help students convert cash to local currency at the airport at the start of the trip. While all meals and activities are included in the trip fee, we recommend $25/week for spending money (for example: for souvenirs or an occasional drink or snack beyond what is provided to the group as a whole). Excess spending money is not necessary for a wonderful Overland experience. Please note: We have found that prepaid Visa cards and AMEX cards do not work internationally.',
+        category: 'Documents and Extra Funds',
+        status: 'Need It',
+        photoURL: null
+    },
+    {
+        name: 'Miscellaneous Funds',
+        quantity: '$100',
+        description: 'Most Overland students will incur some expenses while traveling (for example: an equipment repair or baggage fees at trip end). Please provide your child with $100 (in addition to spending money), to cover these expenses.',
+        category: 'Documents and Extra Funds',
+        status: 'Need It',
+        photoURL: null
+    }
+  ];
+}
             
             // Function to update the UI based on items array
             function updateUI() {
